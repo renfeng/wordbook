@@ -32,6 +32,12 @@ I would crash in an earlier version. Now, you'll read an appropriate message.
 
 # Devices Word Book tested on
 
+## Handware devices
+
+Nexus 5, Lollipop
+
+## AVDs
+
 https://plus.google.com/photos/+FrankR/albums/6104180924507847601?authkey=CNn16rS9z7Xzcw
 
 # Troubleshoot
