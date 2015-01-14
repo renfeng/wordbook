@@ -12,7 +12,7 @@ You can consider it a special browser for OALD with a lazy, and permanent cache.
 
 Start the app, enter a word, and click the Lookup button. Word definition will be downloaded at appropriate moment (with a max delay of 30 seconds) to conserve your battery.
 
-Why not download immediately (synchronously)? This is my Final Project for https://www.udacity.com/course/ud853. It demonstrates the usage of a sync adapter. Another reason is [a feature in planning](https://github.com/renfeng/wordbook/issues/1).
+Why not download immediately (synchronously)? This is my Final Project for https://www.udacity.com/course/ud853. It demonstrates the usage of a sync adapter. Another reason is [a feature in planning](https://github.com/renfeng/wordbook/issues/1). That was the original idea of Word Book.
 
 When the word definition is ready to read, you'll get a notification.
 
