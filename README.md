@@ -20,7 +20,9 @@ You can also read again a word looked up previously by choosing it from the word
 
 ## When to expect the definition to appear on the screen
 
-Word definition view won't get updated until you close and open it again. Same problem with the word list. If you know how to implement the feature of updating UI on a background event, please show me. I'm a good learner :)
+Word definition view won't get updated until you close and open it again. Same problem with the word list.
+
+The problem is not so obvious on phones, but it makes life difficult on tablets, on which app runs in two-pane layout. You'll have to rely on task manager or notification to get the list refreshed. (Sorry for that! If you know how to implement the feature of updating UI on a background event, please show me. I'm a good learner :)
 
 ## What the number next to the word signifies
 
