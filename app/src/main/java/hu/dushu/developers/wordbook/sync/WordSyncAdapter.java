@@ -25,11 +25,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import hu.dushu.developers.wordbook.MainActivity;
 import hu.dushu.developers.wordbook.R;
@@ -115,7 +117,8 @@ public class WordSyncAdapter extends AbstractThreadedSyncAdapter {
     public static String parse(String html) {
 
         Document document = Jsoup.parse(html);
-        Elements entryContent = document.select("#entryContent");
+//        Elements entryContent = document.select("#entryContent");
+        Elements entryContent = document.select("#main-container");
         return entryContent.html();
     }
 
@@ -167,7 +170,7 @@ public class WordSyncAdapter extends AbstractThreadedSyncAdapter {
         BufferedReader reader = null;
 
         // Will contain the raw HTML response as a string.
-        String html = null;
+        String html;
 
         try {
             // Construct the URL for the OpenWeatherMap query
@@ -175,7 +178,8 @@ public class WordSyncAdapter extends AbstractThreadedSyncAdapter {
             // http://openweathermap.org/API#forecast
 //            URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
 
-            Uri uri = Uri.parse("http://www.oxfordlearnersdictionaries.com/definition/english/" + word);
+            Uri uri = Uri.parse("http://www.oxfordlearnersdictionaries.com/definition/english/"
+                    + URLEncoder.encode(word, "UTF-8"));
             Uri.Builder ub = uri.buildUpon();
 //            ub.appendQueryParameter("q", locationSetting);
 //            ub.appendQueryParameter("mode", "json");
@@ -189,7 +193,20 @@ public class WordSyncAdapter extends AbstractThreadedSyncAdapter {
             urlConnection.connect();
 
             // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
+            InputStream inputStream;
+//            if (urlConnection.getResponseCode() == 200) {
+//                inputStream = urlConnection.getInputStream();
+//            } else {
+//                inputStream = urlConnection.getErrorStream();
+//            }
+            Log.d(LOG_TAG, "http status: " + urlConnection.getResponseCode());
+            try {
+                Log.d(LOG_TAG, "input stream");
+                inputStream = urlConnection.getInputStream();
+            } catch (FileNotFoundException ex) {
+                Log.d(LOG_TAG, "error stream");
+                inputStream = urlConnection.getErrorStream();
+            }
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
                 // Nothing to do.
@@ -229,11 +246,6 @@ public class WordSyncAdapter extends AbstractThreadedSyncAdapter {
                     Log.e(LOG_TAG, "Error closing stream", e);
                 }
             }
-        }
-
-        Log.d(LOG_TAG, html);
-        if (html != null) {
-
         }
 
         return html;

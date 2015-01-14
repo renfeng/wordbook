@@ -23,6 +23,10 @@ import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jsoup.Jsoup;
+
+import java.net.URLDecoder;
+
 import hu.dushu.developers.wordbook.data.WordContract;
 
 /**
@@ -73,6 +77,16 @@ public class WordDefinitionFragment extends Fragment
 
     private Intent createShareIntent(String definition) {
 
+        String text = Jsoup.parse(definition).text();
+        try {
+            text = URLDecoder.decode(text, "UTF-8");
+        } catch (Exception ex) {
+            /*
+             * ignore
+             */
+            Log.d(LOG_TAG, "failed to decode: " + ex.toString() + "\n" + definition);
+        }
+
         Intent intent = new Intent(Intent.ACTION_SEND);
 
         /*
@@ -86,7 +100,7 @@ public class WordDefinitionFragment extends Fragment
 //        intent.setType("text/html");
         intent.setType("text/plain");
 
-        intent.putExtra(Intent.EXTRA_TEXT, definition + " #Wordbook");
+        intent.putExtra(Intent.EXTRA_TEXT, text + " #Wordbook");
 
         return intent;
     }
@@ -127,25 +141,31 @@ public class WordDefinitionFragment extends Fragment
 
         Log.v(LOG_TAG, "In onCreateLoader");
 
+        switch (i) {
+            case WORD_LOADER: {
+                Uri uri = WordContract.WordEntity.buildWithWord(getWord());
+                Log.v(LOG_TAG, uri.toString());
 
-        Uri uri = WordContract.WordEntity.buildWithWord(getWord());
-        Log.v(LOG_TAG, uri.toString());
+                // Now create and return a CursorLoader that will take care of
+                // creating a Cursor for the data being displayed.
+                return new CursorLoader(
+                        getActivity(),
+                        uri,
+                        new String[]{
+                                WordContract.WordEntity._ID,
+                                WordContract.WordEntity.COLUMN_WORD,
+                                WordContract.WordEntity.COLUMN_DEFINITION,
+//                                WordContract.WordEntity.COLUMN_DEFINITION_PLAIN,
+                                WordContract.WordEntity.COLUMN_VIEW_COUNT,
+                                WordContract.WordEntity.COLUMN_LAST_SEEN},
+                        null,
+                        null,
+                        null
+                );
+            }
+        }
 
-        // Now create and return a CursorLoader that will take care of
-        // creating a Cursor for the data being displayed.
-        return new CursorLoader(
-                getActivity(),
-                uri,
-                new String[]{
-                        WordContract.WordEntity._ID,
-                        WordContract.WordEntity.COLUMN_WORD,
-                        WordContract.WordEntity.COLUMN_DEFINITION,
-                        WordContract.WordEntity.COLUMN_VIEW_COUNT,
-                        WordContract.WordEntity.COLUMN_LAST_SEEN},
-                null,
-                null,
-                null
-        );
+        return null;
     }
 
     @Override
@@ -191,7 +211,12 @@ public class WordDefinitionFragment extends Fragment
 //            String prefix = "<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" /></head><body>";
 //            String affix = "</body></html>";
 //            getDefinitionWebView().loadData(prefix + definition + affix, "text/html", "utf-8");
-                getDefinitionWebView().loadData(definition, "text/html", "utf-8");
+
+                /*
+                 * http://stackoverflow.com/a/15604954/333033
+                 */
+                getDefinitionWebView().loadData(definition, "text/html; charset=utf-8", "utf-8");
+
 //            getDefinitionWebView().loadData(definition, "text/html", "iso-8855-1");
                 getDefinitionTextView().setText(definition);
 
@@ -258,6 +283,18 @@ public class WordDefinitionFragment extends Fragment
 
             long id = WordContract.add(getWord(), getActivity());
             Log.d(LOG_TAG, "saved word: " + getWord() + "[" + id + "]");
+
+            if (id == -1) {
+                ContentValues values = new ContentValues();
+                values.put(WordContract.WordEntity.COLUMN_WORD, word);
+
+                /*
+                 * TODO increment? requires query
+                 */
+                //values.put(WordContract.WordEntity.COLUMN_VIEW_COUNT, viewCount + 1);
+
+                WordContract.update(values, getActivity());
+            }
         }
 
 

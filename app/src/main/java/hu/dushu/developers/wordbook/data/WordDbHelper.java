@@ -25,6 +25,7 @@ public class WordDbHelper extends SQLiteOpenHelper {
                 WordContract.WordEntity._ID + " INTEGER PRIMARY KEY, " +
                 WordContract.WordEntity.COLUMN_WORD + " TEXT UNIQUE NOT NULL, " +
                 WordContract.WordEntity.COLUMN_DEFINITION + " TEXT, " +
+//                WordContract.WordEntity.COLUMN_DEFINITION_PLAIN + " TEXT, " +
                 WordContract.WordEntity.COLUMN_VIEW_COUNT + " INTEGER NOT NULL, " +
                 WordContract.WordEntity.COLUMN_LAST_SEEN + " TEXT NOT NULL, " +
                 "UNIQUE (" + WordContract.WordEntity.COLUMN_WORD + ") ON CONFLICT IGNORE);");
@@ -36,5 +37,10 @@ public class WordDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + WordContract.WordEntity.TABLE_NAME);
         onCreate(db);
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        onUpgrade(db, oldVersion, newVersion);
     }
 }

@@ -36,6 +36,7 @@ public class WordContract {
 
         public static final String COLUMN_WORD = "word";
         public static final String COLUMN_DEFINITION = "definition";
+//        public static final String COLUMN_DEFINITION_PLAIN = "definition_plain";
         public static final String COLUMN_VIEW_COUNT = "view_count";
         public static final String COLUMN_LAST_SEEN = "last_seen";
 
@@ -96,6 +97,8 @@ public class WordContract {
 
     public static long add(String word, Context context) {
 
+        long id;
+
         ContentValues testValues = new ContentValues();
         testValues.put(WordEntity.COLUMN_WORD, word);
         testValues.put(WordEntity.COLUMN_VIEW_COUNT, 0);
@@ -104,8 +107,13 @@ public class WordContract {
 
         Uri locationUri = context.getContentResolver().insert(
                 WordEntity.CONTENT_URI, testValues);
+        if (locationUri != null) {
+            id = ContentUris.parseId(locationUri);
+        } else {
+            id = -1;
+        }
 
-        return ContentUris.parseId(locationUri);
+        return id;
     }
 
     public static Cursor listNewWords(Context context) {

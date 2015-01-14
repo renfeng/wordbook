@@ -137,8 +137,8 @@ public class WordProvider extends ContentProvider {
                 if (_id > 0) {
                     getContext().getContentResolver().notifyChange(uri, null);
                     return WordContract.WordEntity.buildWordUri(_id);
-                } else {
-                    throw new android.database.SQLException("Failed to insert row into " + uri);
+//                } else {
+//                    throw new android.database.SQLException("Failed to insert row into " + uri);
                 }
             }
 //            default:

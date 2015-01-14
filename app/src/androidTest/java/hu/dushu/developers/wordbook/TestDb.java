@@ -26,7 +26,8 @@ public class TestDb extends AndroidTestCase {
         testValues.put(WordContract.WordEntity.COLUMN_WORD, "android");
         testValues.put(WordContract.WordEntity.COLUMN_VIEW_COUNT, "100");
         testValues.put(WordContract.WordEntity.COLUMN_LAST_SEEN, "20141231");
-        testValues.put(WordContract.WordEntity.COLUMN_DEFINITION, "android definition");
+        testValues.put(WordContract.WordEntity.COLUMN_DEFINITION, "android <b>definition</b>");
+//        testValues.put(WordContract.WordEntity.COLUMN_DEFINITION_PLAIN, "android definition");
 
         return testValues;
     }

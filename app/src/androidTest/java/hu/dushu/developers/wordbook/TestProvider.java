@@ -25,7 +25,8 @@ public class TestProvider extends AndroidTestCase {
         testValues.put(WordContract.WordEntity.COLUMN_WORD, WORD);
         testValues.put(WordContract.WordEntity.COLUMN_VIEW_COUNT, "100");
         testValues.put(WordContract.WordEntity.COLUMN_LAST_SEEN, "20141231");
-        testValues.put(WordContract.WordEntity.COLUMN_DEFINITION, "android definition");
+        testValues.put(WordContract.WordEntity.COLUMN_DEFINITION, "android <b>definition</b>");
+//        testValues.put(WordContract.WordEntity.COLUMN_DEFINITION_PLAIN, "android definition");
 
         return testValues;
     }
@@ -134,6 +135,7 @@ public class TestProvider extends AndroidTestCase {
         ContentValues testValues = new ContentValues();
         testValues.put(WordContract.WordEntity.COLUMN_WORD, word);
         testValues.put(WordContract.WordEntity.COLUMN_DEFINITION, (String) null);
+//        testValues.put(WordContract.WordEntity.COLUMN_DEFINITION_PLAIN, (String) null);
         testValues.put(WordContract.WordEntity.COLUMN_VIEW_COUNT, 1);
 //        testValues.put(WordContract.WordEntity.COLUMN_LAST_SEEN,
 //                WordContract.getDbDateString(new Date()));
@@ -155,6 +157,7 @@ public class TestProvider extends AndroidTestCase {
                             WordContract.WordEntity.COLUMN_WORD,
                             WordContract.WordEntity.COLUMN_VIEW_COUNT,
                             WordContract.WordEntity.COLUMN_DEFINITION,
+//                            WordContract.WordEntity.COLUMN_DEFINITION_PLAIN,
                     },
                     WordContract.WordEntity.COLUMN_WORD + " = ? AND " +
                             WordContract.WordEntity.COLUMN_DEFINITION + " IS NULL", // cols for "where" clause
