@@ -24,7 +24,7 @@ Word definition view won't get updated until you close and open it again. Same p
 
 ## What the number next to the word signifies
 
-It's the view count. In other words, it shows how many times you've read the word definition.
+It's the view count. In other words, it shows how many times you've read the word definition (before this time you see the number).
 
 ## How I can tell if I typed in a valid word or not
 
