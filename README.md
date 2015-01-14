@@ -16,10 +16,20 @@ When the word definition is ready to read, you'll get a notification.
 
 You can also read again a word looked up previously by choosing it from the word list.
 
+# Q&A
+
+## When to expect the definition to appear on the screen
+
+Word definition view won't get updated until you close and open it again. Same problem with the word list. If you know how to implement the feature of updating UI on a background event, please show me. I'm a good learner :)
+
+## What the number next to the word signifies
+
+It's the view count. In other words, it shows how many times you've read the word definition.
+
+## How I can tell if I typed in a valid word or not
+
+I would crash in an earlier version. Now, you'll read an appropriate message.
+
 # Troubleshoot
 
 If you don't get a notification for a new word, kill the app, and start it again.
-
-# Future enhancements
-
-Word definition view won't get updated until you close and open it again. Same problem with the word list. If you know how to implement the feature of updating UI on a background event, please show me. I'm a good learner :)
