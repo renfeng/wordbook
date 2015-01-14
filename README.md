@@ -30,6 +30,10 @@ It's the view count. In other words, it shows how many times you've read the wor
 
 I would crash in an earlier version. Now, you'll read an appropriate message.
 
+# Devices Word Book tested on
+
+https://plus.google.com/photos/+FrankR/albums/6104180924507847601?authkey=CNn16rS9z7Xzcw
+
 # Troubleshoot
 
 If you don't get a notification for a new word, kill the app, and start it again.
